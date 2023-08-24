@@ -12,7 +12,7 @@ class PokemonController extends Controller
 
     public function fetch(Request $request)
     {
-        $query = $request->input('query');
+        $query = strtolower($request->input('query'));
         $notFound = false;
         $previousQuery = null;
 
