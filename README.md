@@ -1,66 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Theta Blog
+Blog for you though
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Task 1: Setup and Basic Routing
+- Inititalize a new Laravel project.
 
-## About Laravel
+```
+composer create-project laravel/laravel theta-blog
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Create routes for user registration, login, and logout.
+For easier authentication, laravel has package to kickstart the login and register function
+```
+composer require laravel/ui
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Then, install laravel UI package to scaffolding using Bootstrap 5
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+php artisan ui bootstrap --auth
 
-## Learning Laravel
+npm install && npm run build
+```
+## Task 2: User Management
+- Implement user registration with validation.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Implement user login and logout functionality.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Create user profile view and edit functionality (Basic form).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Task 3: Blog Post
+1.  Create a migration for blog posts.
+```
+php artisan make:model Post -m
+```
+To create model and migration.
 
-## Laravel Sponsors
+2. Implement a CRUD system for creating, reading, updating, and deleting blog posts.
+```
+php artisan make:controller PostController -r
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+3. Implement pagination for blog post listing.
+```
+$posts = Post::paginate(10)
 
-### Premium Partners
+$posts->links()
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Task 4: Comments
+1. Create a migration for comments.
+```
+php artisan make:model Comment -m
+```
 
-## Contributing
+2. Implement the ability to comment on blog posts.
+    - Add foreign_id for post in Comment migration
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. Display comments on the blog post detail page.
+    - To display a comment just use
+    ```
+    $post->comments;
+    ```
 
-## Code of Conduct
+## Task 5: Relationships and Additional Features
+1. Implement a relationship between users and the author's name.
+    - Add relation for Post, User, and Comment
+    
+    ### Post
+    - One post belong to a User
+    - One post has many Comment
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ### Comment
+    - One comment belong to a Post
+    - One comment belong to a User
 
-## Security Vulnerabilities
+    ### User
+    - One user has many Post
+    - One user has many Comment
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+## Task 6: Integration with API
+- Integrate with a Pokemon API
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Implement a controller to fetch data based on the user-provided parameter which is Pokemon name.
+- Use `@if ` to check response before display message
+
+## Task 8: Styling and UI
+- For styling, we use Bootstrap 5 which come with laravel/ui package
+
+## Task 9: Testing and Validation
+- Test only cover for authentication functionality
+```
+php artisan test --testsuite=Unit
+```
